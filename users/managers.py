@@ -5,9 +5,7 @@ class CustomUserManager(BaseUserManager):
         '''
         Creates and saves a User with the given phone_number and password.
         '''
-        user = self.model(phone_number=phone_number,
-                          is_staff=False, is_active=True, is_superuser=False,
-                          **extra_fields)
+        user = self.model(phone_number=phone_number, is_staff=False, is_active=True, is_superuser=False, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
