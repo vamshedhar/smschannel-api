@@ -2,6 +2,7 @@ from django import forms
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from django.contrib.auth.models import Group
 
 from users.models import User
 
@@ -74,3 +75,5 @@ class CustomUserAdmin(UserAdmin):
 	ordering = ('first_name',)
 
 admin.site.register(User, CustomUserAdmin)
+
+admin.site.unregister(Group)
