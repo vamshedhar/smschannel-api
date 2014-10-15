@@ -1,0 +1,6 @@
+Django==1.7
+PyJWT==0.2.1
+argparse==1.2.1
+djangorestframework==2.4.3
+djangorestframework-jwt==1.0.1
+wsgiref==0.1.2
