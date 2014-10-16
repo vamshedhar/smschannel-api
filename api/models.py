@@ -6,6 +6,7 @@ from django.conf import settings
 class Group(models.Model):
 	name = models.CharField(max_length=100, null=False, blank=False)
 	description = models.TextField(blank=True)
+	head = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, related_name='head_of')
 
 	def __unicode__(self):
 		return self.name
@@ -29,9 +30,8 @@ class PhoneBookLog(models.Model):
 	def __unicode__(self):
 		return self.name
 
-class UserDetail(models.Model):
-	user = models.ForeignKey(settings.AUTH_USER_MODEL, null=False)
-	head_of = models.ForeignKey(Group, null=True, related_name='head')
+class UserPrivileges(models.Model):
+	user = models.ForeignKey(settings.AUTH_USER_MODEL, null=False, related_name='privileges')
 	privileges = models.ManyToManyField(Group, null=True, related_name='privileged_members')
 
 	def __unicode__(self):
