@@ -32,7 +32,7 @@ class PhoneBookLog(models.Model):
 
 class UserPrivileges(models.Model):
 	user = models.ForeignKey(settings.AUTH_USER_MODEL, null=False, related_name='privileges')
-	privileges = models.ManyToManyField(Group, null=True, related_name='privileged_members')
+	privileges = models.ManyToManyField(Group, null=True, related_name='privileged_users')
 
 	def __unicode__(self):
 		return unicode(self.user)
