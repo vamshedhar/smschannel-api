@@ -3,6 +3,8 @@
 *.pyc
 __pycache__
 
+*.sqlite3
+
 # Logs
 *.log
 pip-log.txt
