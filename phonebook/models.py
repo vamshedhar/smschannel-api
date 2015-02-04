@@ -8,10 +8,10 @@ from base.models import PhoneBookBaseModel
 
 class Group(PhoneBookBaseModel):
   tracker = FieldTracker()
-  name = models.CharField(_('Group Name'), max_length=100, null=False, blank=False)
-  description = models.TextField(_('Description'), blank=True)
-  head = models.ForeignKey(_('Person Incharge'), settings.AUTH_USER_MODEL, null=True, related_name='head_of')
-  authorized_users = models.ManyToManyField(_('Authorized Users'), settings.AUTH_USER_MODEL, null=False, related_name='privileges', help_text='Users who are allowed to send sms to the group.')
+  name = models.CharField("Group Name", max_length=100, null=False, blank=False)
+  description = models.TextField("Description", blank=True)
+  head = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, related_name='head_of')
+  authorized_users = models.ManyToManyField(settings.AUTH_USER_MODEL, null=False, related_name='privileges', help_text='Users who are allowed to send sms to the group.')
 
 class PhoneBookContact(PhoneBookBaseModel):
 
@@ -22,7 +22,7 @@ class PhoneBookContact(PhoneBookBaseModel):
   )
 
   tracker = FieldTracker()
-  name = models.CharField(_('Name'), max_length=100, null=False, blank=False)
-  phone_number = models.CharField(_('Phone No.'), null=False, blank=False, unique=True)
-  type = models.CharField(max_length=10, choices=MEMBER_TYPE, null=False, blank=False)
+  name = models.CharField("Name", max_length=100, null=False, blank=False)
+  phone_number = models.CharField("Phone No.", null=False, blank=False, unique=True)
+  type = models.CharField("Contact Type", max_length=10, choices=MEMBER_TYPE, null=False, blank=False)
   groups = models.ManyToManyField(Group, related_name='members')

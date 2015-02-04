@@ -9,10 +9,10 @@ from phonebook.models import PhoneBookContact, Group
 
 class GroupMessage(models.Model):
   tracker = FieldTracker()
-  sent_to = models.ForeignKey(_('Group Name'), Group, null=False, related_name='messages')
-  message = models.TextField(_('Message'), blank="False")
+  sent_to = models.ForeignKey(Group, null=False, related_name='messages')
+  message = models.TextField("Message", blank="False")
 
 class SingleMessage(models.Model):
   tracker = FieldTracker()
-  sent_to = models.ForeignKey(_('Sent to'), PhoneBookContact, null=False, related_name='messages')
-  message = models.TextField(_('Message'), blank="False")
+  sent_to = models.ForeignKey(PhoneBookContact, null=False, related_name='messages')
+  message = models.TextField("Message", blank="False")
