@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import GroupMessage, GroupMessage
+from .models import GroupMessage, SingleMessage
 
 # Register your models here.
 
