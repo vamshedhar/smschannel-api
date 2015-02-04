@@ -25,4 +25,4 @@ The base app will run but you'll need to carry out a few steps to make it functi
 
 Create database by running ``syncdb`` command. It will request you to create a superuser. Please proceed creating a superuser account.
 
-	$ puthon manage.py syncdb
+	$ python manage.py syncdb
