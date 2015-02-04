@@ -48,7 +48,6 @@ THIRD_PARTY_APPS = (
 LOCAL_APPS = (
 
   # Your local django apps go here.
-  'api',
   'base',
   'users',
   'phonebook',
