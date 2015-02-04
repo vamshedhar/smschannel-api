@@ -57,6 +57,7 @@ class SMSBaseModel(UUIDModel):
   )
 
   sent_by = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, editable=False, related_name="%(app_label)s_%(class)s_sent")
+  sent_on = models.DateTimeField(auto_now_add=True)
   delivery_status = models.IntegerField(max_length=1, choices=DELIVERY_STATUS, default=0)
 
   class Meta:
