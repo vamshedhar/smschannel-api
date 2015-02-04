@@ -21,6 +21,7 @@ class PhoneBookLog(PhoneBookBaseModel):
     ('SF', 'Staff')
   )
 
+  tracker = FieldTracker()
   name = models.CharField(_('Name'), max_length=100, null=False, blank=False)
   phone_number = models.CharField(_('Phone No.'), null=False, blank=False, unique=True)
   type = models.CharField(max_length=10, choices=MEMBER_TYPE, null=False, blank=False)
