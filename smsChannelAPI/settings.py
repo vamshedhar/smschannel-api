@@ -29,19 +29,33 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-INSTALLED_APPS = (
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'rest_framework',
-    'base',
-    'users',
-    'phonebook',
-    'smslogs',
+THIRD_PARTY_APPS = (
+  'django.contrib.auth',
+  'django.contrib.contenttypes',
+  'django.contrib.sessions',
+  'django.contrib.messages',
+  'django.contrib.staticfiles',
+
+  #Aditionally installed apps
+
+  'django_extensions',  # http://django-extensions.readthedocs.org/
+  'suit', # Admin Interface : http://djangosuit.com/
+
+  # Admin - Placed here gor Django Suit
+  'django.contrib.admin',
 )
+
+LOCAL_APPS = (
+
+  # Your local django apps go here.
+  'api',
+  'base',
+  'users',
+  'phonebook',
+  'smslogs',
+)
+
+INSTALLED_APPS = THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -72,7 +86,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -82,7 +96,12 @@ USE_TZ = True
 
 ########## Custom user app defaults
 # Select the correct user model
+
 AUTH_USER_MODEL = "users.User"
+
+######### Configs of Additionally installed apps
+
+# Django Restframework config
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
@@ -94,6 +113,38 @@ REST_FRAMEWORK = {
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     ),
 }
+
+# Django Suit configuration
+
+SUIT_CONFIG = {
+    # header
+    'ADMIN_NAME': 'SMS Channel API',
+    # 'HEADER_DATE_FORMAT': 'l, j. F Y',
+    'HEADER_TIME_FORMAT': 'h:i A',
+
+    # forms
+    # 'SHOW_REQUIRED_ASTERISK': True,  # Default True
+    # 'CONFIRM_UNSAVED_CHANGES': True, # Default True
+
+    # menu
+    # 'SEARCH_URL': '/admin/auth/user/',
+    # 'MENU_ICONS': {
+    #    'sites': 'icon-leaf',
+    #    'auth': 'icon-lock',
+    # },
+    # 'MENU_OPEN_FIRST_CHILD': True, # Default True
+    # 'MENU_EXCLUDE': ('auth.group',),
+    # 'MENU': (
+    #     'sites',
+    #     {'app': 'auth', 'icon':'icon-lock', 'models': ('user', 'group')},
+    #     {'label': 'Settings', 'icon':'icon-cog', 'models': ('auth.user', 'auth.group')},
+    #     {'label': 'Support', 'icon':'icon-question-sign', 'url': '/support/'},
+    # ),
+
+    # misc
+    # 'LIST_PER_PAGE': 15
+}
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
