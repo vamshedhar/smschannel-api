@@ -13,7 +13,7 @@ class Group(PhoneBookBaseModel):
   head = models.ForeignKey(_('Person Incharge'), settings.AUTH_USER_MODEL, null=True, related_name='head_of')
   authorized_users = models.ManyToManyField(_('Authorized Users'), settings.AUTH_USER_MODEL, null=False, related_name='privileges', help_text='Users who are allowed to send sms to the group.')
 
-class PhoneBookLog(PhoneBookBaseModel):
+class PhoneBookContact(PhoneBookBaseModel):
 
   MEMBER_TYPE = (
     ('SD', 'Student'),
