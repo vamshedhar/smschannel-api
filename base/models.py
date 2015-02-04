@@ -30,9 +30,9 @@ class PhoneBookBaseModel(UUIDModel):
 
   def save(self, *args, **kwargs):
     if self.deleted_by:
-        raise ValidationError('You can\'t change deleted_by User')
+      raise ValidationError('You can\'t change deleted_by User')
     if not self.id and not self.created_by:
-        raise ValidationError('Please specify created_by User')
+      raise ValidationError('Please specify created_by User')
     self.modified_by = self.created_by
     return super(PhoneBookBaseModel, self).save(*args, **kwargs)
 
