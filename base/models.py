@@ -6,6 +6,8 @@ from django_extensions.db.models import TimeStampedModel
 
 from base.exceptions import ValidationError
 
+import arrow
+
 # Create your models here.
 
 class UUIDModel(TimeStampedModel):
@@ -39,14 +41,14 @@ class PhoneBookBaseModel(UUIDModel):
 
   def delete(self, *args, **kwargs):
     if self.id:
-        if self.deleted_by is None:
-            raise ValidationError('Please specify deleted_by User')
-        if self.tracker.changed().get('deleted_by_id', {}) is None:
-            self.modified = arrow.now().datetime
-            return super(PhoneBookBaseModel, self).save()
-        raise ValidationError({'__all__': 'This object has been deleted'})
+      if self.deleted_by is None:
+        raise ValidationError('Please specify deleted_by User')
+      if self.tracker.changed().get('deleted_by_id', {}) is None:
+        self.modified = arrow.now().datetime
+        return super(PhoneBookBaseModel, self).save()
+      raise ValidationError({'__all__': 'This object has been deleted'})
     else:
-        return super(PhoneBookBaseModel, self).delete(*args, **kwargs)
+      return super(PhoneBookBaseModel, self).delete(*args, **kwargs)
 
 
 class SMSBaseModel(UUIDModel):

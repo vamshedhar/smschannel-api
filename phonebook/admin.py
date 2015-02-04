@@ -18,8 +18,21 @@ class GroupAdmin(admin.ModelAdmin):
         obj.created_by = request.user
     obj.save()
 
+  def delete_model(self, request, obj, form, change):
+    """When creating a new object, set the creator field.
+    """
+    if not change:
+        obj.deleted_by = request.user
+    obj.delete()
+
 class PhoneBookContactAdmin(admin.ModelAdmin):
   list_display = ('id', 'name', 'phone_number', 'created_by')
+
+  def get_queryset(self, request):
+    query = super(PhoneBookContactAdmin, self).get_queryset(request)
+    if request.user.is_superuser:
+      return query
+    return query.filter(deleted_by=None)
 
   def save_model(self, request, obj, form, change):
     """When creating a new object, set the creator field.
@@ -27,6 +40,18 @@ class PhoneBookContactAdmin(admin.ModelAdmin):
     if not change:
         obj.created_by = request.user
     obj.save()
+
+  # def delete_model(self, request, obj, form, change):
+  #   """When creating a new object, set the creator field.
+  #   """
+  #   if not change:
+  #       obj.deleted_by = request.user
+  #   obj.delete()
+
+  def delete_model(self, request, obj):
+    obj.deleted_by = request.user
+    super(PhoneBookContactAdmin, self).delete_model(request, obj)
+
 
 def register_models(models):
   for model in models:
