@@ -37,6 +37,7 @@ THIRD_PARTY_APPS = (
 
   #Aditionally installed apps
 
+  'rest_framework',
   'django_extensions',  # http://django-extensions.readthedocs.org/
   'suit', # Admin Interface : http://djangosuit.com/
 
