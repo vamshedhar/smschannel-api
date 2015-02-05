@@ -9,12 +9,12 @@ from base.views import PhoneBookBaseViewset
 
 # Create your views here.
 
-class GroupViewSet(PhoneBookBaseViewset):
+class GroupViewset(PhoneBookBaseViewset):
 
   queryset = Group.objects.all()
   serializer_class = GroupWithMembersSerializer
 
-class PhoneBookViewSet(PhoneBookBaseViewset):
+class PhoneBookViewset(PhoneBookBaseViewset):
 
   queryset = PhoneBookContact.objects.all()
   serializer_class = PhoneBookWithGroupsSerializer

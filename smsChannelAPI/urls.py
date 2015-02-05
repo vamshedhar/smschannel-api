@@ -6,12 +6,12 @@ admin.autodiscover()
 from rest_framework import routers
 
 from smslogs.views import GroupMessageViewset, SingleMessageViewset
-from phonebook.views import GroupViewSet, PhoneBookViewSet
+from phonebook.views import GroupViewset, PhoneBookViewset
 from users.views import UserViewset
 
 router = routers.SimpleRouter()
-router.register(r'phonebook', PhoneBookViewSet)
-router.register(r'groups', GroupViewSet)
+router.register(r'phonebook', PhoneBookViewset)
+router.register(r'groups', GroupViewset)
 router.register(r'single-message', SingleMessageViewset)
 router.register(r'group-message', GroupMessageViewset)
 router.register(r'users', UserViewset)
