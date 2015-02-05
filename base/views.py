@@ -19,9 +19,9 @@ class PhoneBookBaseViewset(viewsets.ModelViewSet):
   filter_backends = (DeletedObjectsFilter,)
   lookup_field = 'id'
 
-  def pre_save(self, message):
-    message.created_by = self.request.user
+  def pre_save(self, obj):
+    obj.created_by = self.request.user
 
-  def pre_delete(self, message):
-    message.deleted_by = self.request.user
+  def pre_delete(self, obj):
+    obj.deleted_by = self.request.user
 
