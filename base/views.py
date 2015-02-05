@@ -19,9 +19,12 @@ class PhoneBookBaseViewset(viewsets.ModelViewSet):
   filter_backends = (DeletedObjectsFilter,)
   lookup_field = 'id'
 
-  def pre_save(self, obj):
-    obj.created_by = self.request.user
+  def perform_update(self, serializer):
+    serializer.save(modified_by=self.request.user)
 
-  def pre_delete(self, obj):
-    obj.deleted_by = self.request.user
+  def perform_create(self, serializer):
+    serializer.save(created_by=self.request.user)
 
+  def perform_destroy(self, instance):
+    instance.deleted_by = self.request.user
+    instance.delete()

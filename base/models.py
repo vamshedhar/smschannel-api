@@ -37,10 +37,6 @@ class PhoneBookBaseModel(UUIDModel):
       if not self.created_by:
         raise ValidationError('Please specify created_by User')
       self.modified_by = self.created_by
-    else:
-      self.modified_by = self.created_by
-      if self.tracker.has_changed('created_by'):
-        self.created_by = self.tracker.previous('created_by')
     return super(PhoneBookBaseModel, self).save(*args, **kwargs)
 
   def delete(self, *args, **kwargs):
