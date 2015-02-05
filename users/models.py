@@ -2,11 +2,13 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from managers import CustomUserManager
 
+from base.models import UUIDModel
+
 """
 Contains custom user model
 """
 
-class User(AbstractBaseUser, PermissionsMixin):
+class User(AbstractBaseUser, UUIDModel, PermissionsMixin):
 	phone_number = models.BigIntegerField(unique=True, db_index=True)
 	first_name = models.CharField(max_length=50)
 	last_name = models.CharField(max_length=50)
