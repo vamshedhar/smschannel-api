@@ -67,7 +67,7 @@ class SMSBaseModel(UUIDModel):
 
   def save(self, *args, **kwargs):
     if not self.id and not self.sent_by:
-        raise ValidationError('Please specify sent_by User')
+      raise ValidationError('Please specify sent_by User')
     return super(SMSBaseModel, self).save(*args, **kwargs)
 
   def delete(self, *args, **kwargs):
