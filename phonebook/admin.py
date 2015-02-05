@@ -6,22 +6,20 @@ from base.admin import PhoneBookBaseAdmin
 
 # Register your models here.
 
-models_to_register = [
-    Group, PhoneBookContact
-]
-
 class GroupAdmin(PhoneBookBaseAdmin):
-  list_display = ('id', 'name', 'description', 'created_by')
+  list_display = ('id', 'name', 'description', 'created_by', 'modified_by', 'deleted_by', 'created', 'modified')
 
 class PhoneBookContactAdmin(PhoneBookBaseAdmin):
-  list_display = ('id', 'name', 'phone_number', 'created_by')
+  list_display = ('id', 'name', 'phone_number', 'created_by', 'modified_by', 'deleted_by', 'created', 'modified')
+
+models_to_register = [
+  {'model_name': Group, 'model_admin': GroupAdmin},
+  {'model_name': PhoneBookContact, 'model_admin': PhoneBookContactAdmin},
+]
 
 
 def register_models(models):
   for model in models:
-    admin.site.register(model)
+    admin.site.register(model['model_name'], model['model_admin'])
 
-# register_models(models_to_register)
-
-admin.site.register(Group, GroupAdmin)
-admin.site.register(PhoneBookContact, PhoneBookContactAdmin)
+register_models(models_to_register)
