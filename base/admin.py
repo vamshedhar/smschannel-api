@@ -31,8 +31,6 @@ class PhoneBookBaseAdmin(admin.ModelAdmin):
 
 class SMSBaseAdmin(admin.ModelAdmin):
 
-  readonly_fields = ('sent_to', 'message',)
-
   class Meta:
     abstract = True
 
