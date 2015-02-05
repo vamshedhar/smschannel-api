@@ -2,8 +2,6 @@ from rest_framework import serializers
 
 from .models import Group, PhoneBookContact
 
-from users.serializers import UserSerializer
-
 class PhoneBookContactSerializer(serializers.ModelSerializer):
   class Meta:
     model = PhoneBookContact
