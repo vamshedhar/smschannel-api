@@ -10,3 +10,14 @@ class SMSBaseViewset(viewsets.ModelViewSet):
 
   def pre_save(self, message):
     message.sent_by = self.request.user
+
+class PhoneBookBaseViewset(viewsets.ModelViewSet):
+  permission_classes = (permissions.IsAuthenticated,)
+  lookup_field = 'id'
+
+  def pre_save(self, message):
+    message.created_by = self.request.user
+
+  def pre_delete(self, message):
+    message.deleted_by = self.request.user
+
