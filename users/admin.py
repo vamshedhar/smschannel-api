@@ -69,7 +69,7 @@ class CustomUserAdmin(UserAdmin):
 		),
 	)
 
-	list_display = ('phone_number', 'first_name', 'last_name', 'email', 'is_active', 'is_staff')
+	list_display = ('id', 'phone_number', 'first_name', 'last_name', 'email', 'is_active', 'is_staff')
 	list_filter = ('is_staff', 'is_active')
 	search_fields = ('phone_number',)
 	ordering = ('first_name',)
