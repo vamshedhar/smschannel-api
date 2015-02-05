@@ -26,3 +26,7 @@ The base app will run but you'll need to carry out a few steps to make it functi
 Create database by running ``syncdb`` command. It will request you to create a superuser. Please proceed creating a superuser account.
 
 	$ python manage.py syncdb
+
+Finally for working with django-uuid you need to apply this fix_.
+
+.. _fix: https://github.com/dcramer/django-uuidfield/pull/22/files
