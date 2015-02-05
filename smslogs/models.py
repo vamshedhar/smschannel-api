@@ -7,12 +7,12 @@ from phonebook.models import PhoneBookContact, Group
 
 # Create your models here.
 
-class GroupMessage(models.Model):
+class GroupMessage(SMSBaseModel):
   tracker = FieldTracker()
   sent_to = models.ForeignKey(Group, null=False, related_name='messages')
   message = models.TextField("Message", blank="False")
 
-class SingleMessage(models.Model):
+class SingleMessage(SMSBaseModel):
   tracker = FieldTracker()
   sent_to = models.ForeignKey(PhoneBookContact, null=False, related_name='messages')
   message = models.TextField("Message", blank="False")
