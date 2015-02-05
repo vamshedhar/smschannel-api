@@ -11,11 +11,9 @@ The steps below will get you up and running with a local development environment
 * pip
 * virtualenv
 
-First make sure to create and activate a virtualenv_, then open a terminal at the project root and install the requirements for local development::
+First make sure to create and activate a [virtualenv](http://docs.python-guide.org/en/latest/dev/virtualenvs/), then open a terminal at the project root and install the requirements for local development::
 
     $ pip install -r requirements.txt
-
-.. _virtualenv: http://docs.python-guide.org/en/latest/dev/virtualenvs/
 
 You can now run the ``runserver`` command::
 
@@ -27,6 +25,4 @@ Create database by running ``syncdb`` command. It will request you to create a s
 
 	$ python manage.py syncdb
 
-Finally for working with django-uuid you need to apply this fix_.
-
-.. _fix: https://github.com/dcramer/django-uuidfield/pull/22/files
+Finally for working with django-uuid you need to apply this [fix](https://github.com/dcramer/django-uuidfield/pull/22/files).
