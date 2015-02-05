@@ -15,7 +15,7 @@ class GroupSerializer(serializers.ModelSerializer):
     fields = ('id', 'name', 'description', 'head', 'created_by', 'modified_by', 'deleted_by', 'created', 'modified')
 
 class PhoneBookWithGroupsSerializer(serializers.ModelSerializer):
-  groups = GroupSerializer(many=True)
+  groups = GroupSerializer(many=True, read_only=True)
 
   class Meta:
     model = PhoneBookContact
@@ -23,8 +23,9 @@ class PhoneBookWithGroupsSerializer(serializers.ModelSerializer):
     read_only_fields = ('id', 'messages', 'created_by', 'modified_by', 'deleted_by', 'created', 'modified')
 
 class GroupWithMembersSerializer(serializers.ModelSerializer):
-  members = PhoneBookContactSerializer()
+  members = PhoneBookContactSerializer(many=True, read_only=True)
 
   class Meta:
     model = Group
-    fields = ('id', 'name', 'description', 'head', 'members', 'messages', 'created_by', 'modified_by', 'deleted_by', 'created', 'modified')
+    fields = ('id', 'name', 'description', 'head', 'members', 'messages', 'created_by', 'modified_by', 'deleted_by', 'created', 'modified', 'authorized_users')
+    read_only_fields = ('id', 'messages', 'created_by', 'modified_by', 'deleted_by', 'created', 'modified')
