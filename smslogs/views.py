@@ -13,10 +13,8 @@ class GroupMessageViewset(SMSBaseViewset):
 
   queryset = GroupMessage.objects.all()
   serializer_class = GroupMessageSerializer
-  permission_classes = (permissions.IsAuthenticated,)
 
 class SingleMessageViewset(SMSBaseViewset):
 
   queryset = SingleMessage.objects.all()
   serializer_class = SingleMessageSerializer
-  permission_classes = (permissions.IsAuthenticated,)
