@@ -20,7 +20,7 @@ class UUIDModel(TimeStampedModel):
     try:
       return self.name
     except AttributeError:
-      return self.id
+      return unicode(self.id)
 
 class PhoneBookBaseModel(UUIDModel):
   created_by = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, editable=False, related_name="%(app_label)s_%(class)s_created")
@@ -66,7 +66,6 @@ class SMSBaseModel(UUIDModel):
       abstract = True
 
   def save(self, *args, **kwargs):
-    if not self.id and not self.created_by:
-        raise ValidationError('Please specify created_by User')
-    self.modified_by = self.created_by
+    if not self.id and not self.sent_by:
+        raise ValidationError('Please specify sent_by User')
     return super(SMSBaseModel, self).save(*args, **kwargs)
