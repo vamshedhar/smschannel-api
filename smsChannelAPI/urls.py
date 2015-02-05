@@ -6,10 +6,13 @@ admin.autodiscover()
 from rest_framework import routers
 
 from smslogs.views import GroupMessageViewset, SingleMessageViewset
+from phonebook.views import GroupViewSet, PhoneBookViewSet
 
 router = routers.SimpleRouter()
-router.register(r'group-message', GroupMessageViewset)
+router.register(r'phonebook', PhoneBookViewSet)
+router.register(r'groups', GroupViewSet)
 router.register(r'single-message', SingleMessageViewset)
+router.register(r'group-message', GroupMessageViewset)
 
 urlpatterns = patterns('',
     # Examples:
