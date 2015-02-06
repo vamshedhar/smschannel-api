@@ -4,7 +4,7 @@ from django.conf import settings
 from uuidfield import UUIDField
 from django_extensions.db.models import TimeStampedModel
 
-from base.exceptions import ValidationError
+from base.exceptions import ValidationError, PermissionError
 
 import arrow
 
@@ -68,6 +68,13 @@ class SMSBaseModel(UUIDModel):
   def save(self, *args, **kwargs):
     if not self.id and not self.sent_by:
       raise ValidationError('Please specify sent_by User')
+    if self.id:
+      if self.tracker.has_changed('message'):
+        raise PermissionError('You cannot change message content.')
+      if self.tracker.changed().get('sent_to_id', None) is None:
+        super(SMSBaseModel, self).save(*args, **kwargs)
+      else:
+        raise PermissionError('You cannot change sent_to.')
     return super(SMSBaseModel, self).save(*args, **kwargs)
 
   def delete(self, *args, **kwargs):
