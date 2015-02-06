@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Group, PhoneBookContact
+from .models import Group, PhoneBookContact, GroupMember
 
 from base.exceptions import ValidationError
 
@@ -37,3 +37,12 @@ class GroupWithMembersSerializer(serializers.ModelSerializer):
     model = Group
     fields = ('id', 'name', 'description', 'head', 'members', 'messages', 'created_by', 'modified_by', 'deleted_by', 'created', 'modified', 'authorized_users')
     read_only_fields = ('id', 'messages', 'created_by', 'modified_by', 'deleted_by', 'created', 'modified')
+
+class GroupMembersSerializer(serializers.ModelSerializer):
+  group = serializers.PrimaryKeyRelatedField(queryset=Group.objects.filter(deleted_by=None), required=True)
+  member = serializers.PrimaryKeyRelatedField(queryset=PhoneBookContact.objects.filter(deleted_by=None), required=True)
+
+  class Meta:
+    model = GroupMember
+    fields = ('id', 'group', 'member', 'created_by', 'modified_by', 'deleted_by', 'created', 'modified')
+    read_only_fields = ('id', 'created_by', 'modified_by', 'deleted_by', 'created', 'modified')
