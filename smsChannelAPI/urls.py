@@ -8,11 +8,14 @@ from rest_framework import routers
 
 from phonebook import views as PhoneBookViews
 from smslogs.views import GroupMessageViewset, SingleMessageViewset
-from phonebook.views import GroupViewset, PhoneBookViewset, APIRootView
+from phonebook.views import GroupViewset, PhoneBookViewset, APIRootView, FacultyViewset, StaffViewset, StudentViewset
 from users.views import UserViewset
 
 router = routers.SimpleRouter()
 router.register(r'phonebook', PhoneBookViewset, base_name="phonebook")
+router.register(r'faculty', FacultyViewset, base_name="faculty")
+router.register(r'staff', StaffViewset, base_name="staff")
+router.register(r'students', StudentViewset, base_name="student")
 router.register(r'groups', GroupViewset, base_name="groups")
 router.register(r'single-message', SingleMessageViewset, base_name="single-message")
 router.register(r'group-message', GroupMessageViewset, base_name="group-message")

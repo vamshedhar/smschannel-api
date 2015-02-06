@@ -26,6 +26,9 @@ class APIRootView(APIView):
       'admin': reverse('admin:index', request=request),
       'api_root': reverse('api_root', request=request),
       'phonebook': reverse('api:phonebook-list', request=request),
+      'faculty': reverse('api:faculty-list', request=request),
+      'student': reverse('api:student-list', request=request),
+      'staff': reverse('api:staff-list', request=request),
       'groups': reverse('api:groups-list', request=request),
       'single-message': reverse('api:single-message-list', request=request),
       'group-message': reverse('api:group-message-list', request=request),
@@ -41,4 +44,19 @@ class GroupViewset(PhoneBookBaseViewset):
 class PhoneBookViewset(PhoneBookBaseViewset):
 
   queryset = PhoneBookContact.objects.all()
+  serializer_class = PhoneBookWithGroupsSerializer
+
+class FacultyViewset(PhoneBookBaseViewset):
+
+  queryset = PhoneBookContact.objects.filter(type="FA")
+  serializer_class = PhoneBookWithGroupsSerializer
+
+class StaffViewset(PhoneBookBaseViewset):
+
+  queryset = PhoneBookContact.objects.filter(type="SF")
+  serializer_class = PhoneBookWithGroupsSerializer
+
+class StudentViewset(PhoneBookBaseViewset):
+
+  queryset = PhoneBookContact.objects.filter(type="SD")
   serializer_class = PhoneBookWithGroupsSerializer
