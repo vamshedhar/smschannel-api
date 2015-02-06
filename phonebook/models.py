@@ -25,4 +25,9 @@ class PhoneBookContact(PhoneBookBaseModel):
   name = models.CharField("Name", max_length=100, null=False, blank=False)
   phone_number = models.CharField("Phone No.", max_length="15", null=False, blank=False)
   type = models.CharField("Contact Type", max_length=10, choices=MEMBER_TYPE, null=False, blank=False)
-  groups = models.ManyToManyField(Group, related_name='members')
+  groups = models.ManyToManyField(Group, related_name='members', through='GroupMember')
+
+class GroupMember(PhoneBookBaseModel):
+  tracker = FieldTracker()
+  group = models.ForeignKey(Group, null=False, blank=False)
+  member = models.ForeignKey(PhoneBookContact, null=False, blank=False)
