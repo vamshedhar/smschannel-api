@@ -11,8 +11,8 @@ class SMSBaseViewset(viewsets.ModelViewSet):
   lookup_field = 'id'
   filter_backends = (UserMessagesFilter,)
 
-  def pre_save(self, message):
-    message.sent_by = self.request.user
+  def perform_create(self, serializer):
+    serializer.save(sent_by=self.request.user)
 
 class PhoneBookBaseViewset(viewsets.ModelViewSet):
   permission_classes = (permissions.IsAuthenticated,)
