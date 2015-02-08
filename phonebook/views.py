@@ -4,7 +4,7 @@ from rest_framework import viewsets, permissions
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.reverse import reverse, reverse_lazy
+from rest_framework.reverse import reverse
 
 from .models import Group, PhoneBookContact, GroupMember
 from .serializers import GroupWithMembersSerializer, PhoneBookWithGroupsSerializer, GroupMembersSerializer
