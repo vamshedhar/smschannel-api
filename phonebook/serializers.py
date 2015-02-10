@@ -38,6 +38,14 @@ class GroupWithMembersSerializer(serializers.ModelSerializer):
     fields = ('id', 'name', 'description', 'head', 'members', 'messages', 'created_by', 'modified_by', 'deleted_by', 'created', 'modified', 'authorized_users')
     read_only_fields = ('id', 'messages', 'created_by', 'modified_by', 'deleted_by', 'created', 'modified')
 
+  def validate_name(self, value):
+    try:
+      Group.objects.get(name=value, deleted_by=None)
+      raise ValidationError('Another ACTIVE group with same name exists.')
+    except Group.DoesNotExist:
+      pass
+    return value
+
 class GroupMembersSerializer(serializers.ModelSerializer):
   group = serializers.PrimaryKeyRelatedField(queryset=Group.objects.filter(deleted_by=None), required=True)
   member = serializers.PrimaryKeyRelatedField(queryset=PhoneBookContact.objects.filter(deleted_by=None), required=True)
