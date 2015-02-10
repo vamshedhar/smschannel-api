@@ -66,7 +66,7 @@ class GroupMembersSerializer(serializers.ModelSerializer):
 
   def validate(self, data):
     try:
-      GroupMember.objects.get(group_id=data.get('group'), member_id=data.get.('member'), deleted_by=None)
+      GroupMember.objects.get(group_id=data.get('group'), member_id=data.get('member'), deleted_by=None)
       raise ValidationError('This person was already added to the group.')
     except GroupMember.DoesNotExist:
       pass
