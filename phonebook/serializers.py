@@ -46,6 +46,15 @@ class GroupWithMembersSerializer(serializers.ModelSerializer):
       pass
     return value
 
+  def update(self, instance, validated_data):
+    try:
+      Group.objects.get(name=validated_data.get('name'), deleted_by=None)
+      raise ValidationError("Another group exists with same name.")
+    except Group.DoesNotExist:
+      pass
+    instance = super(GroupMembersSerializer, self).update(instance, validated_data)
+    return instance
+
 class GroupMembersSerializer(serializers.ModelSerializer):
   group = serializers.PrimaryKeyRelatedField(queryset=Group.objects.filter(deleted_by=None), required=True)
   member = serializers.PrimaryKeyRelatedField(queryset=PhoneBookContact.objects.filter(deleted_by=None), required=True)
@@ -54,3 +63,12 @@ class GroupMembersSerializer(serializers.ModelSerializer):
     model = GroupMember
     fields = ('id', 'group', 'member', 'created_by', 'modified_by', 'deleted_by', 'created', 'modified')
     read_only_fields = ('id', 'created_by', 'modified_by', 'deleted_by', 'created', 'modified')
+
+  def validate(self, data):
+    try:
+      GroupMember.objects.get(group_id=data.get('group'), member_id=data.get.('member'), deleted_by=None)
+      raise ValidationError('This person was already added to the group.')
+    except GroupMember.DoesNotExist:
+      pass
+    return data
+
