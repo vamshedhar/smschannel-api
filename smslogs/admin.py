@@ -7,10 +7,10 @@ from base.admin import SMSBaseAdmin
 # Register your models here.
 
 class GroupMessageAdmin(SMSBaseAdmin):
-  list_display = ('id', 'sent_to', 'message', 'sent_by', 'sent_on', 'delivery_status', 'created', 'modified')
+  list_display = ('id', 'sent_to', 'message', 'sent_by', 'sent_on', 'created', 'modified')
 
 class SingleMessageAdmin(SMSBaseAdmin):
-  list_display = ('id', 'sent_to', 'message', 'sent_by', 'sent_on', 'delivery_status', 'created', 'modified')
+  list_display = ('id', 'sent_to', 'message', 'sent_by', 'sent_on', 'created', 'modified')
 
 models_to_register = [
   {'model_name': GroupMessage, 'model_admin': GroupMessageAdmin},

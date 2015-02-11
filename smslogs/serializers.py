@@ -8,18 +8,16 @@ from phonebook.serializers import PhoneBookContactSerializer, GroupWithMembersSe
 
 class GroupMessageSerializer(serializers.ModelSerializer):
   sent_by = UserSerializer(read_only=True)
-  sent_to = GroupWithMembersSerializer(read_only=True)
 
   class Meta:
     model = GroupMessage
-    fields = ('id', 'sent_to', 'message', 'sent_by', 'sent_on', 'delivery_status', 'created', 'modified')
+    fields = ('id', 'sent_to', 'message', 'sent_by', 'sent_on', 'created', 'modified')
     read_only_fields = ('id',)
 
 class SingleMessageSerializer(serializers.ModelSerializer):
   sent_by = UserSerializer(read_only=True)
-  sent_to = PhoneBookContactSerializer(read_only=True)
 
   class Meta:
     model = SingleMessage
-    fields = ('id', 'sent_to', 'message', 'sent_by', 'sent_on', 'delivery_status', 'created', 'modified')
+    fields = ('id', 'sent_to', 'message', 'sent_by', 'sent_on', 'created', 'modified')
     read_only_fields = ('id',)
