@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Group, PhoneBookContact
+from .models import Group, PhoneBookContact, GroupMember
 
 from base.admin import PhoneBookBaseAdmin
 
@@ -12,9 +12,13 @@ class GroupAdmin(PhoneBookBaseAdmin):
 class PhoneBookContactAdmin(PhoneBookBaseAdmin):
   list_display = ('id', 'name', 'phone_number', 'created_by', 'modified_by', 'deleted_by', 'created', 'modified')
 
+class GroupMembersAdmin(PhoneBookBaseAdmin):
+  list_display = ('id', 'group', 'member', 'created_by', 'modified_by', 'deleted_by', 'created', 'modified')
+
 models_to_register = [
   {'model_name': Group, 'model_admin': GroupAdmin},
   {'model_name': PhoneBookContact, 'model_admin': PhoneBookContactAdmin},
+  {'model_name': GroupMember, 'model_admin': GroupMembersAdmin},
 ]
 
 

@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.reverse import reverse
 
 from .models import Group, PhoneBookContact, GroupMember
-from .serializers import GroupWithMembersSerializer, PhoneBookWithGroupsSerializer, GroupMembersSerializer
+from .serializers import PhoneBookContactSerializer, GroupSerializer, GroupWithMembersSerializer, PhoneBookWithGroupsSerializer, GroupMembersSerializer
 
 from base.views import PhoneBookBaseViewset
 
@@ -46,7 +46,7 @@ class GroupViewset(PhoneBookBaseViewset):
 class PhoneBookViewset(PhoneBookBaseViewset):
 
   queryset = PhoneBookContact.objects.all()
-  serializer_class = PhoneBookWithGroupsSerializer
+  serializer_class = PhoneBookContactSerializer
 
   @list_route(methods=['GET'])
   def staff(self, request, *args, **kwargs):
@@ -65,5 +65,5 @@ class PhoneBookViewset(PhoneBookBaseViewset):
 
 class GroupMembersViewset(PhoneBookBaseViewset):
 
-  queryset = GroupMember.objects.all()
+  queryset = GroupMember.objects.all()group_by('group')
   serializer_class = GroupMembersSerializer

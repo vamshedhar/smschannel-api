@@ -7,7 +7,7 @@ from base.exceptions import ValidationError
 class PhoneBookContactSerializer(serializers.ModelSerializer):
   class Meta:
     model = PhoneBookContact
-    fields = ('id', 'name', 'phone_number', 'type', 'created_by', 'modified_by', 'deleted_by', 'created', 'modified')
+    fields = ('id', 'name', 'phone_number', 'groups', 'type', 'created_by', 'modified_by', 'deleted_by', 'created', 'modified')
 
 class GroupSerializer(serializers.ModelSerializer):
   class Meta:
