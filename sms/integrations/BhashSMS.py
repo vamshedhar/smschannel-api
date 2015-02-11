@@ -37,12 +37,12 @@ class BhashSMSIntegration():
       'text': self.message.get('message')
       })
 
-    sms_request = requests.get(self.API_BASE_URL.MESSAGE, params=payload)
+    sms_request = requests.get(self.API_BASE_URL.get('MESSAGE'), params=payload)
 
     response_content = sms_request.content
     response_code = sms_request.status_code
 
-    number_list = self.message.number_list.split(',')
+    number_list = self.message.get('number_list').split(',')
     message_ids = response_content.split()
     status_list = []
 
@@ -66,6 +66,6 @@ class BhashSMSIntegration():
         'msgid': message_id
       })
 
-    delivery_report = requests.get(self.API_BASE_URL.DELIVERY_REPORT, params=payload)
+    delivery_report = requests.get(self.API_BASE_URL.get('DELIVERY_REPORT'), params=payload)
 
     return delivery_report

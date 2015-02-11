@@ -58,7 +58,7 @@ class SingleMessageViewset(SMSBaseViewset):
       'message': message
     }
 
-    message_details = MessageDetails(type='single', request_id=single_message_data.id, sent_to=sent_to, number_list=number_list)
+    message_details = MessageDetails(type='single', request_id=single_message_data.get('id'), sent_to=sent_to, number_list=number_list, message=message, sent_by=self.request.user)
 
     message_details.save()
     sms = message_details.send(sms)

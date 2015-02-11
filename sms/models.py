@@ -25,10 +25,12 @@ class MessageDetails(SMSBaseModel):
     ('BhashSMS', 'BhashSMS'),
   )
 
+  tracker = FieldTracker()
   type = models.CharField(_('Message Type'), max_length=20, null=False, blank=False, choices=TYPE, default=TYPE.single)
   request_id = models.CharField(_('Single/Group Message ID'), max_length=255, null=False, blank=False)
   sent_to = models.CharField(_('Single/Group ID'), max_length=255, null=False, blank=False)
   number_list = models.TextField(_('Numbers list'), blank=True, null=True, default=None)
+  message = models.TextField(_('Message Content'), blank=True, null=True, default=None)
   provider = models.CharField(_('SMS Service Provider'), max_length=20, null=False, blank=False, choices=PROVIDERS, default=PROVIDERS.BhashSMS)
   message_ids = models.TextField(_('SMS API Message IDs'), blank=True, null=True, default=None)
   sent = models.BooleanField(_('Delivery Status'), default=False, null=False, blank=False)
@@ -39,7 +41,7 @@ class MessageDetails(SMSBaseModel):
     if self.sent:
       raise ValidationError('Cannot resend already sent SMS.')
 
-    if self.request_id:
+    if not self.sent_to:
       raise ValidationError('Please specify sent_to.')
 
     api_integration = INTEGRATION_MAP.get(self.provider)
