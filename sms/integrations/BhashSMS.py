@@ -33,8 +33,8 @@ class BhashSMSIntegration():
     payload = self.PARAMS.copy()
 
     payload.update({
-      'phone': self.message.number_list,
-      'text': self.message.message
+      'phone': self.message.get('number_list'),
+      'text': self.message.get('message')
       })
 
     sms_request = requests.get(self.API_BASE_URL.MESSAGE, params=payload)
@@ -52,7 +52,8 @@ class BhashSMSIntegration():
 
     self.message.update({
         'message_ids': ','.join(message_ids),
-        'status_list': ','.join(status_list)
+        'status_list': ','.join(status_list),
+        'response_code': response_code
       })
 
     return self.message

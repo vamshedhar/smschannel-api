@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets, permissions, exceptions, status
 from rest_framework.response import Response
 
 from phonebook.models import PhoneBookContact, Group
@@ -48,6 +48,28 @@ class SingleMessageViewset(SMSBaseViewset):
         'SMS': 'Rejected: Invalid contact ID.'
       }, status=status.HTTP_400_BAD_REQUEST)
 
-      sms = MessageDetails(type='single', request_id=sent_to)
+    single_message = SingleMessage(sent_to_id=sent_to, message=message, sent_by=self.request.user)
+    single_message.save()
+
+    single_message_data = SingleMessageSerializer(single_message).data
+
+    sms = {
+      'number_list': number_list,
+      'message': message
+    }
+
+    message_details = MessageDetails(type='single', request_id=single_message_data.id, sent_to=sent_to, number_list=number_list)
+
+    message_details.save()
+    sms = message_details.send(sms)
+
+    message_details.message_ids = sms.get('message_ids')
+    message_details.status_list = sms.get('status_list')
+    message_details.response_code = sms.get('response_code')
+    message_details.sent = True
+
+    message_details.save()
+
+    return Response(single_message_data, status=status.HTTP_201_CREATED)
 
 
