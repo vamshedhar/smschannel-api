@@ -10,12 +10,17 @@ class BhashSMSIntegration():
     'pass': PASS,
     'sender': SENDER_ID,,
     'priority': 'ndnd',
-    'smstype': 'normal',
+    'smstype': 'normal'
+  }
+
+  REPORT_PARAMS = {
+    'user': USERNAME,
+    'msgtype': 'ndnd'
   }
 
   API_BASE_URL = {
     'MESSAGE': 'http://bhashsms.com/api/sendmsg.php',
-    'DELIVERY_REPORT': 'http://bhashsms.com/api/recdlr.php',
+    'DELIVERY_REPORT': 'http://bhashsms.com/api/recdlr.php'
   }
 
   class Meta:
@@ -34,6 +39,32 @@ class BhashSMSIntegration():
 
     sms_request = requests.get(self.API_BASE_URL.MESSAGE, params=payload)
 
-    message_id = sms_request.content
+    response_content = sms_request.content
     response_code = sms_request.status_code
 
+    number_list = self.message.number_list.split(',')
+    message_ids = response_content.split()
+    status_list = []
+
+    for i in range(0,len(number_list)-1):
+      status = self.delivery_status(number_list[i], message_ids[i])
+      status_list.append(status)
+
+    self.message.update({
+        'message_id': ','.join(message_ids),
+        'status_list': ','.join(status_list)
+      })
+
+    return self.message
+
+  def delivery_status(self, number, message_id):
+    payload = self.REPORT_PARAMS.copy()
+
+    payload.update({
+        'phone': number,
+        'msgid': message_id
+      })
+
+    delivery_report = requests.get(self.API_BASE_URL.DELIVERY_REPORT, params=payload)
+
+    return delivery_report
