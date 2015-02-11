@@ -60,6 +60,7 @@ class CustomUserAdmin(UserAdmin):
 	fieldsets = [
 		('Login Details', {'fields': ['phone_number', 'password']}),
 		('Personal Details', {'fields': ['first_name', 'last_name', 'email']}),
+    ('Permissions', {'fields': ('is_active','is_staff')}),
 	]
 
 	add_fieldsets = (
