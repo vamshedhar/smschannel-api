@@ -46,14 +46,14 @@ class BhashSMSIntegration():
     message_ids = response_content.split()
     status_list = []
 
-    for i in range(0,len(number_list)-1):
+    for i in range(0,len(number_list)):
       status = self.delivery_status(number_list[i], message_ids[i])
       status_list.append(status)
 
     self.message.update({
-        'message_ids': ','.join(message_ids),
-        'status_list': ','.join(status_list),
-        'response_code': response_code
+      'message_ids': ','.join(message_ids),
+      'status_list': ','.join(status_list),
+      'response_code': response_code
       })
 
     return self.message
@@ -68,4 +68,4 @@ class BhashSMSIntegration():
 
     delivery_report = requests.get(self.API_BASE_URL.get('DELIVERY_REPORT'), params=payload)
 
-    return delivery_report
+    return delivery_report.content
