@@ -23,8 +23,9 @@ class MessageDetails(SMSBaseModel):
   request_id = models.CharField(_('Single/Group Message ID'), max_length=255, null=Fasle, blank=Fasle)
   provider = models.CharField(_('SMS Service Provider'), max_length=20, null=False, blank=Fasle, choices=PROVIDERS, default=PROVIDERS.BhashSMS)
   sent = models.BooleanField(_('Delivery Status'), default=Fasle, null=Fasle, blank=Fasle)
-  response = models.TextField(_('SMS API Response'), blank=True, null=True, default=None)
-  response_code = models.CharField(_('SMS API Response code'), blank=True, null=True default=None)
+  message_id = models.CharField(_('SMS API Message ID'), max_length=100, blank=True, null=True default=None)
+  status = models.TextField(_('Message Delivery Status'), blank=True, null=True, default=None)
+  response_code = models.CharField(_('SMS API Response code'), max_length=100, blank=True, null=True default=None)
 
   def send(self):
     if self.sent:
