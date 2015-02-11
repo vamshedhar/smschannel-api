@@ -5,8 +5,13 @@ from base.models import SMSBaseModel
 from smslogs.models import GroupMessage, SingleMessage
 
 from base.exceptions import ValidationError, PermissionError
+import integrations
 
 # Create your models here.
+
+INTEGRATION_MAP = {
+    'BhashSMS': integrations.BhashSMSIntegration
+}
 
 class MessageDetails(SMSBaseModel):
 
@@ -33,6 +38,13 @@ class MessageDetails(SMSBaseModel):
 
     if self.request_id:
       raise ValidationError('Please specify sent_to.')
+
+    api_integration = INTEGRATION_MAP.get(self.provider)
+
+    API = api_integration(self)
+    message = API.send()
+
+    return self
 
 
 
