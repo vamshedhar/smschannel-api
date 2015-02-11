@@ -8,7 +8,7 @@ class BhashSMSIntegration():
   PARAMS = {
     'user': USERNAME,
     'pass': PASS,
-    'sender': SENDER_ID,,
+    'sender': SENDER_ID,
     'priority': 'ndnd',
     'smstype': 'normal'
   }
@@ -51,7 +51,7 @@ class BhashSMSIntegration():
       status_list.append(status)
 
     self.message.update({
-        'message_id': ','.join(message_ids),
+        'message_ids': ','.join(message_ids),
         'status_list': ','.join(status_list)
       })
 

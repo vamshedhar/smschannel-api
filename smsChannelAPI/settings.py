@@ -52,6 +52,7 @@ LOCAL_APPS = (
   'users',
   'phonebook',
   'smslogs',
+  'sms',
 )
 
 INSTALLED_APPS = THIRD_PARTY_APPS + LOCAL_APPS
