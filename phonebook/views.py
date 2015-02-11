@@ -65,5 +65,5 @@ class PhoneBookViewset(PhoneBookBaseViewset):
 
 class GroupMembersViewset(PhoneBookBaseViewset):
 
-  queryset = GroupMember.objects.all()group_by('group')
+  queryset = GroupMember.objects.all()
   serializer_class = GroupMembersSerializer
