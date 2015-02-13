@@ -19,6 +19,61 @@ class GroupMessageViewset(SMSBaseViewset):
   queryset = GroupMessage.objects.all()
   serializer_class = GroupMessageSerializer
 
+  def create(self, request, *args, **kwargs):
+    message_data = request.data
+    sent_to = message_data.get('sent_to', None)
+    message = message_data.get('message', None)
+
+    if not message:
+      return Response({
+        'SMS': 'Rejected: Empty message cannot be sent.'
+      }, status=status.HTTP_400_BAD_REQUEST)
+
+    if not sent_to:
+      return Response({
+        'SMS': 'Rejected: Message has no sent to.'
+      }, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+      group = Group.objects.get(id=sent_to)
+      group_data = GroupWithMembersSerializer(group).data
+      number_list = []
+      group_members = group_data.get('members')
+
+      for member in group_members:
+        phone_number = member.get('phone_number')
+        number_list.append(phone_number)
+
+      number_list = ','.join(number_list)
+    except Group.DoesNotExist:
+      return Response({
+        'SMS': 'Rejected: Invalid Group ID.'
+      }, status=status.HTTP_400_BAD_REQUEST)
+
+    group_message = GroupMessage(sent_to_id=sent_to, message=message, sent_by=self.request.user)
+    group_message.save()
+
+    group_message_data = GroupMessageSerializer(group_message).data
+
+    sms = {
+      'number_list': number_list,
+      'message': message
+    }
+
+    message_details = MessageDetails(type='group', request_id=group_message_data.get('id'), sent_to=sent_to, number_list=number_list, message=message, sent_by=self.request.user)
+
+    message_details.save()
+    sms = message_details.send(sms)
+
+    message_details.message_ids = sms.get('message_ids')
+    message_details.status_list = sms.get('status_list')
+    message_details.response_code = sms.get('response_code')
+    message_details.sent = True
+
+    message_details.save()
+
+    return Response(group_message_data, status=status.HTTP_201_CREATED)
+
 class SingleMessageViewset(SMSBaseViewset):
 
   queryset = SingleMessage.objects.all()
