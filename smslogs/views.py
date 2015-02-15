@@ -2,6 +2,7 @@ from django.shortcuts import render
 
 from rest_framework import viewsets, permissions, exceptions, status
 from rest_framework.response import Response
+from rest_framework.decorators import list_route, detail_route
 
 from phonebook.models import PhoneBookContact, Group
 from sms.models import MessageDetails
@@ -9,6 +10,7 @@ from .models import GroupMessage, SingleMessage
 
 from phonebook.serializers import PhoneBookContactSerializer, GroupWithMembersSerializer
 from .serializers import GroupMessageSerializer, SingleMessageSerializer
+from sms.serializers import MessageDetailsSerializer
 
 from base.views import SMSBaseViewset
 
@@ -74,6 +76,18 @@ class GroupMessageViewset(SMSBaseViewset):
 
     return Response(group_message_data, status=status.HTTP_201_CREATED)
 
+  @detail_route(methods=['GET'])
+  def delivery_status(self, request, *args, **kwargs):
+    obj = self.get_object()
+    group_message_data = GroupMessageSerializer(obj).data
+
+    message_details = MessageDetails.objects.get(request_id=group_message_data.get('id')).delivery_status()
+    message_details_data = MessageDetailsSerializer(message_details).data
+    group_message_data.update({
+        'message_details': message_details_data
+      })
+    return Response(group_message_data, status=status.HTTP_201_CREATED)
+
 class SingleMessageViewset(SMSBaseViewset):
 
   queryset = SingleMessage.objects.all()
@@ -125,6 +139,18 @@ class SingleMessageViewset(SMSBaseViewset):
 
     message_details.save()
 
+    return Response(single_message_data, status=status.HTTP_201_CREATED)
+
+  @detail_route(methods=['GET'])
+  def delivery_status(self, request, *args, **kwargs):
+    obj = self.get_object()
+    single_message_data = SingleMessageSerializer(obj).data
+
+    message_details = MessageDetails.objects.get(request_id=single_message_data.get('id')).delivery_status()
+    message_details_data = MessageDetailsSerializer(message_details).data
+    single_message_data.update({
+        'message_details': message_details_data
+      })
     return Response(single_message_data, status=status.HTTP_201_CREATED)
 
 

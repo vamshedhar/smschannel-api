@@ -51,6 +51,25 @@ class MessageDetails(SMSBaseModel):
 
     return message
 
+  def delivery_status(self):
+
+    api_integration = INTEGRATION_MAP.get(self.provider)
+    API = api_integration({})
+
+    number_list = self.number_list.split(',')
+    message_ids = self.message_ids.split(',')
+    status_list = []
+
+    for i in range(0,len(number_list)):
+      status = API.delivery_status(number_list[i], message_ids[i])
+      status_list.append(status)
+
+    self.status_list = ','.join(status_list)
+
+    self.save()
+
+    return self
+
 
 
 # class GroupMessageDetails(MessageDetails):
