@@ -1,4 +1,4 @@
-sms-channel-api
+SMS Channel API
 ==============================
 
 API of sms portal of IIT Roorkee Saharanpur Campus. Developed by IMG, IIT Roorkee-Saharanpur Campus
